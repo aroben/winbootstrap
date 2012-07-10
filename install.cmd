@@ -1,1 +1,1 @@
-C:\cygwin\bin\bash.exe --login %~dp0\install.sh
+powershell -ExecutionPolicy RemoteSigned %~dp0\install.ps1
