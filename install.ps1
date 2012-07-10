@@ -1,6 +1,17 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Install-Cygwin {
+  $client = New-Object Net.WebClient
+  $cygwinInstaller = [IO.Path]::GetTempFileName()
+  $client.DownloadFile("http://cygwin.com/setup.exe", $cygwinInstaller)
+
+  & $cygwinInstaller --quiet-mode --download --local-package-dir C:\ProgramData\Cygwin --packages openssh
+  if ($LastExitCode -ne 0) {
+    throw "Error installing Cygwin"
+  }
+}
+
 function Install-BootstrapSshFiles {
   $directory = Split-Path $MyInvocation.MyCommand.Path
   Copy-Item (Join-Path $directory bootstrap-ssh.sh) C:\cygwin\home\Administrator
@@ -24,5 +35,6 @@ function Enable-AutoLogOn {
   Pop-Location
 }
 
+Install-Cygwin
 Install-BootstrapSshFiles
 Enable-AutoLogOn
