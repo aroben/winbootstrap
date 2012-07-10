@@ -14,7 +14,7 @@ function Install-Cygwin {
 }
 
 function Install-BootstrapSshFiles {
-  $directory = Split-Path $MyInvocation.MyCommand.Path
+  $directory = Split-Path $MyInvocation.MyCommand.Definition
   Copy-Item (Join-Path $directory bootstrap-ssh.sh) C:\cygwin\home\Administrator
   Copy-Item (Join-Path $directory bootstrap-ssh.cmd) [Environment]::GetFolderPath("Startup")
 }
