@@ -6,8 +6,9 @@ function Install-Cygwin {
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
   $client.DownloadFile("http://cygwin.com/setup.exe", $cygwinInstaller)
 
-  & $cygwinInstaller --quiet-mode --download --local-package-dir C:\ProgramData\Cygwin --packages openssh
-  if ($LastExitCode -ne 0) {
+  $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --download, --local-package-dir, C:\ProgramData\Cygwin, --packages, openssh
+  Wait-Process -InputObject $process
+  if ($process.ExitCode -ne 0) {
     throw "Error installing Cygwin"
   }
 }
