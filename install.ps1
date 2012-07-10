@@ -14,8 +14,9 @@ function Install-Cygwin {
 }
 
 function Install-BootstrapSshFiles {
-  Copy-Item .\bootstrap-ssh.sh C:\cygwin\home\Administrator
-  Copy-Item .\bootstrap-ssh.cmd [Environment]::GetFolderPath("Startup")
+  $directory = Split-Path $MyInvocation.MyCommand.Path
+  Copy-Item (Join-Path $directory bootstrap-ssh.sh) C:\cygwin\home\Administrator
+  Copy-Item (Join-Path $directory bootstrap-ssh.cmd) [Environment]::GetFolderPath("Startup")
 }
 
 function Read-HostMasked([string]$prompt="Password") {
