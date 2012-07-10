@@ -1,1 +1,1 @@
-powershell -ExecutionPolicy RemoteSigned %~dp0\install.ps1
+powershell -ExecutionPolicy Unrestricted %~dp0\install.ps1
