@@ -45,4 +45,16 @@ random_password() {
   echo "$PASS"      # ==> Or, redirect to a file, as desired.
 }
 
-ssh-host-config --yes --user cyg_server --pwd $(random_password)
+start_sshd() {
+  ssh-host-config --yes --user cyg_server --pwd $(random_password)
+  net start sshd
+}
+
+clean_up() {
+  STARTUP="/cygdrive/c/Users/Administrator/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+  rm "$0"
+  rm "$STARTUP/bootstrap-ssh.cmd"
+}
+
+start_sshd
+clean_up
