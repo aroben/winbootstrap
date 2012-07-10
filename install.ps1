@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 function Install-Cygwin {
   $client = New-Object Net.WebClient
-  $cygwinInstaller = [IO.Path]::GetTempFileName()
+  $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
   $client.DownloadFile("http://cygwin.com/setup.exe", $cygwinInstaller)
 
   & $cygwinInstaller --quiet-mode --download --local-package-dir C:\ProgramData\Cygwin --packages openssh
