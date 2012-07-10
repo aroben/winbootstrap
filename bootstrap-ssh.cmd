@@ -1,1 +1,1 @@
-C:\cygwin\bin\sh.exe C:\cygwin\home\Administrator\bootstrap-ssh.sh
+C:\cygwin\bin\bash.exe --login /home/Administrator/bootstrap-ssh.sh
