@@ -48,6 +48,7 @@ random_password() {
 start_sshd() {
   ssh-host-config --yes --user cyg_server --pwd $(random_password)
   net start sshd
+  netsh advfirewall firewall add rule name=sshd dir=in action=allow program=C:\\cygwin\\usr\\sbin\\sshd.exe localport=22 protocol=tcp
 }
 
 clean_up() {
