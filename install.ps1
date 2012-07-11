@@ -29,7 +29,9 @@ function Install-StartupScripts {
     Copy-Item $script.Path C:\cygwin\home\Administrator
   }
 
-  reg import (Join-Path $scriptDirectory bootstrap-startup.reg) 2> $null
+  $ErrorActionPreference = "SilentlyContinue"
+  reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
+  $ErrorActionPreference = "Stop"
 }
 
 Install-Cygwin
