@@ -4,4 +4,4 @@ To run:
 (New-Object Net.WebClient).DownloadString("https://raw.github.com/aroben/winbootstrap/master/bootstrap.ps1") | Invoke-Expression
 ```
 
-`sshd` will now be running.
+The computer will reboot, and `sshd` will now be running.

@@ -29,3 +29,4 @@ function Register-Sshd {
 Install-Cygwin
 Create-RootDirectory
 Register-Sshd
+Restart-Computer
