@@ -11,7 +11,7 @@ function Create-ShellFolder($path) {
 }
 
 function Unzip-Files($zipPath, $destinationPath) {
-  $zipPackage = Create-ShellFolder $zipFile
+  $zipPackage = Create-ShellFolder $zipPath
   $destination = Create-ShellFolder $destinationPath
   $destination.CopyHere($zipPackage.Items(), 0x10)
 }
