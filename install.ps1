@@ -13,6 +13,9 @@ function Install-Cygwin {
   if ($process.ExitCode -ne 0) {
     throw "Error installing Cygwin"
   }
+
+  # Create the home directory
+  C:\cygwin\bin\bash.exe --login -c exit
 }
 
 function Install-BootstrapSshFiles {
