@@ -24,4 +24,5 @@ Unzip-Files $zip $tempDir.FullName
 Start-Sleep -Seconds 1
 $install = (Resolve-Path (Join-Path $tempDir.FullName "*\install.ps1")).Path
 powershell -ExecutionPolicy Bypass -File $install > C:\Users\Administrator\winbootstrap.log 2>&1
-Restart-Computer
+
+"Your computer is now bootstrapped. Reboot now, or save a VM image for easy duplication."
