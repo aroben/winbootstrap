@@ -1,5 +1,8 @@
-1. Download and extract [this repo's scripts](https://github.com/aroben/winbootstrap/zipball/master)
-2. Double-click `install.cmd`
+To run:
+
+```powershell
+(New-Object Net.WebClient).DownloadString("https://raw.github.com/aroben/winbootstrap/master/bootstrap.ps1") | Invoke-Expression
+```
 
 On the next boot of this machine, `sshd` will get configured with new host
 keys. You can save a disk image of the machine at this point to enable quick
