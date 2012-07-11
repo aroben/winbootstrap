@@ -29,9 +29,9 @@ function Install-StartupScripts {
     Copy-Item $script.Path C:\cygwin\home\Administrator
   }
 
-  reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
+#reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
 }
 
 Install-Cygwin
 Register-Sshd
-#Install-StartupScripts
+Install-StartupScripts
