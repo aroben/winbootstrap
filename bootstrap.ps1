@@ -1,8 +1,6 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$scriptDirectory = Split-Path $MyInvocation.MyCommand.Path
-
 function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
