@@ -21,5 +21,5 @@ $client = New-Object Net.WebClient
 $zip = Join-Path $tempDir.FullName winbootstrap.zip
 $client.DownloadFile("https://github.com/aroben/winbootstrap/zipball/master", $zip)
 Unzip-Files $zip $tempDir.FullName
-$install = Join-Path $tempDir.FullName install.cmd
-& $install
+$install = Join-Path $tempDir.FullName install.ps1
+& $install | Tee-Object -FilePath C:\Users\Administrator\winbootstrap.log
