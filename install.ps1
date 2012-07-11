@@ -29,7 +29,7 @@ function Install-StartupScripts {
     Copy-Item $script.Path C:\cygwin\home\Administrator
   }
 
-  reg import (Join-Path $scriptDirectory bootstrap-startup.reg) >$null 2>&1
+  reg import (Join-Path $scriptDirectory bootstrap-startup.reg) >$null 2>$null
 }
 
 Install-Cygwin
