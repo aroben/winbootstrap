@@ -23,4 +23,4 @@ $client.DownloadFile("https://github.com/aroben/winbootstrap/zipball/master", $z
 Unzip-Files $zip $tempDir.FullName
 Start-Sleep -Seconds 1
 $install = (Resolve-Path (Join-Path $tempDir.FullName "*\install.ps1")).Path
-& $install 2>&1 | Tee-Object C:\Users\Administrator\winbootstrap.log
+powershell -ExecutionPolicy Bypass -File $install > C:\Users\Administrator\winbootstrap.log 2>&1
