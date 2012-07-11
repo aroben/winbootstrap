@@ -1,6 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+$scriptDirectory = Split-Path $MyInvocation.MyCommand.Path
+
 function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
@@ -14,9 +16,8 @@ function Install-Cygwin {
 }
 
 function Install-BootstrapSshFiles {
-  $directory = Split-Path $MyInvocation.MyCommand.Path
-  Copy-Item (Join-Path $directory bootstrap-ssh.sh) C:\cygwin\home\Administrator
-  Copy-Item (Join-Path $directory bootstrap-ssh.cmd) [Environment]::GetFolderPath("Startup")
+  Copy-Item (Join-Path $scriptDirectory bootstrap-ssh.sh) C:\cygwin\home\Administrator
+  Copy-Item (Join-Path $scriptDirectory bootstrap-ssh.cmd) [Environment]::GetFolderPath("Startup")
 }
 
 function Read-HostMasked([string]$prompt="Password") {
