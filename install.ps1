@@ -34,4 +34,4 @@ function Install-StartupScripts {
 
 Install-Cygwin
 Register-Sshd
-Install-StartupScripts
+#Install-StartupScripts
