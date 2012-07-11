@@ -1,5 +1,4 @@
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
 
 $scriptDirectory = Split-Path $MyInvocation.MyCommand.Path
 
@@ -29,9 +28,7 @@ function Install-StartupScripts {
     Copy-Item $script.Path C:\cygwin\home\Administrator
   }
 
-  $ErrorActionPreference = "SilentlyContinue"
   reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
-  $ErrorActionPreference = "Stop"
 }
 
 Install-Cygwin

@@ -1,5 +1,4 @@
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
 
 function Start-Sshd {
   # First we generate new keys in case we're launching on a new VM.

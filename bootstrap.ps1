@@ -1,5 +1,4 @@
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
 
 function Create-TempDirectory {
   $path = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName())
