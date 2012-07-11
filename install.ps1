@@ -19,18 +19,8 @@ function Register-Sshd {
   $password = [Web.Security.Membership]::GeneratePassword(16, 4)
   C:\cygwin\bin\bash.exe --login -- /usr/bin/ssh-host-config --yes --user cyg_server --pwd $password
   netsh advfirewall firewall add rule name=sshd dir=in action=allow program=C:\cygwin\usr\sbin\sshd.exe localport=22 protocol=tcp
-  # Don't let sshd start on the next boot until we've had a chance to regenerate the host keys.
-  Set-Service sshd -StartupType Disabled
-}
-
-function Install-StartupScripts {
-  foreach ($script in (Resolve-Path (Join-Path $scriptDirectory "bootstrap-startup*"))) {
-    Copy-Item $script.Path C:\cygwin\home\Administrator
-  }
-
-  reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
+  net start sshd
 }
 
 Install-Cygwin
 Register-Sshd
-Install-StartupScripts
