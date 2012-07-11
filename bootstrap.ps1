@@ -13,6 +13,11 @@ function Install-Cygwin {
   }
 }
 
+function Create-RootDirectory {
+  # Our bootstrapping scripts rely on /root existing in a bash shell.
+  New-Item C:\cygwin\root -Type Directory | Out-Null
+}
+
 function Register-Sshd {
   Add-Type -Assembly System.Web
   $password = [Web.Security.Membership]::GeneratePassword(16, 4)
@@ -22,4 +27,5 @@ function Register-Sshd {
 }
 
 Install-Cygwin
+Create-RootDirectory
 Register-Sshd
