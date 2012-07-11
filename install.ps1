@@ -29,10 +29,7 @@ function Install-StartupScripts {
     Copy-Item $script.Path C:\cygwin\home\Administrator
   }
 
-  reg import (Join-Path $scriptDirectory bootstrap-startup.reg) 2>$null
-  if ($LastExitCode -ne 0) {
-    throw "Error installing startup script"
-  }
+  reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
 }
 
 Install-Cygwin
