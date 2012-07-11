@@ -13,33 +13,25 @@ function Install-Cygwin {
   if ($process.ExitCode -ne 0) {
     throw "Error installing Cygwin"
   }
-
-  # Create the home directory
-  C:\cygwin\bin\bash.exe --login -c exit
 }
 
-function Install-BootstrapSshFiles {
-  Copy-Item (Join-Path $scriptDirectory bootstrap-ssh.sh) C:\cygwin\home\Administrator
-  Copy-Item (Join-Path $scriptDirectory bootstrap-ssh.cmd) ([Environment]::GetFolderPath("Startup"))
+function Register-Sshd {
+  Add-Type -Assembly System.Web
+  $password = [Web.Security.Membership]::GeneratePassword(16, 4)
+  C:\cygwin\bin\bash.exe --login -- /usr/bin/ssh-host-config --yes --user cyg_server --pwd $password
+  netsh advfirewall firewall add rule name=sshd dir=in action=allow program=C:\cygwin\usr\sbin\sshd.exe localport=22 protocol=tcp
+  # Don't let sshd start on the next boot until we've had a chance to regenerate the host keys.
+  Set-Service sshd -StartupType Disabled
 }
 
-function Read-HostMasked([string]$prompt="Password") {
-  $password = Read-Host -AsSecureString $prompt;
-  $BSTR = [System.Runtime.InteropServices.marshal]::SecureStringToBSTR($password);
-  $password = [System.Runtime.InteropServices.marshal]::PtrToStringAuto($BSTR);
-  [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR);
-  return $password;
-}
+function Install-StartupScripts {
+  foreach ($script in (Resolve-Path (Join-Path $scriptDirectory "bootstrap-startup*"))) {
+    Copy-Item $script.Path C:\cygwin\home\Administrator
+  }
 
-function Enable-AutoLogOn {
-  $password = Read-HostMasked
-  Push-Location "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
-  Set-ItemProperty . DefaultUserName Administrator
-  Set-ItemProperty . DefaultPassword $password
-  Set-ItemProperty . AutoAdminLogon 1
-  Pop-Location
+  reg import (Join-Path $scriptDirectory bootstrap-startup.reg)
 }
 
 Install-Cygwin
-Install-BootstrapSshFiles
-Enable-AutoLogOn
+Register-Sshd
+Install-StartupScripts
