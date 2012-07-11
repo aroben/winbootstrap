@@ -1,27 +1,26 @@
 Set-StrictMode -Version Latest
 
-function Create-TempDirectory {
-  $path = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName())
-  New-Item $path -Type Directory
+$scriptDirectory = Split-Path $MyInvocation.MyCommand.Path
+
+function Install-Cygwin {
+  $client = New-Object Net.WebClient
+  $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
+  $client.DownloadFile("http://cygwin.com/setup.exe", $cygwinInstaller)
+
+  $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, openssh
+  Wait-Process -InputObject $process
+  if ($process.ExitCode -ne 0) {
+    throw "Error installing Cygwin"
+  }
 }
 
-function Create-ShellFolder($path) {
-  (New-Object -COM Shell.Application).NameSpace($path)
+function Register-Sshd {
+  Add-Type -Assembly System.Web
+  $password = [Web.Security.Membership]::GeneratePassword(16, 4)
+  C:\cygwin\bin\bash.exe --login -- /usr/bin/ssh-host-config --yes --user cyg_server --pwd $password
+  netsh advfirewall firewall add rule name=sshd dir=in action=allow program=C:\cygwin\usr\sbin\sshd.exe localport=22 protocol=tcp
+  net start sshd
 }
 
-function Unzip-Files($zipPath, $destinationPath) {
-  $zipPackage = Create-ShellFolder $zipPath
-  $destination = Create-ShellFolder $destinationPath
-  $destination.CopyHere($zipPackage.Items(), 0x10)
-}
-
-$tempDir = Create-TempDirectory
-$client = New-Object Net.WebClient
-$zip = Join-Path $tempDir.FullName winbootstrap.zip
-$client.DownloadFile("https://github.com/aroben/winbootstrap/zipball/master", $zip)
-Unzip-Files $zip $tempDir.FullName
-Start-Sleep -Seconds 1
-$install = (Resolve-Path (Join-Path $tempDir.FullName "*\install.ps1")).Path
-powershell -ExecutionPolicy Bypass -File $install > C:\Users\Administrator\winbootstrap.log 2>C:\Users\Administrator\winbootstrap-error.log
-
-"Your computer is now bootstrapped. Reboot now, or save a VM image for easy duplication."
+Install-Cygwin
+Register-Sshd
