@@ -21,5 +21,6 @@ $client = New-Object Net.WebClient
 $zip = Join-Path $tempDir.FullName winbootstrap.zip
 $client.DownloadFile("https://github.com/aroben/winbootstrap/zipball/master", $zip)
 Unzip-Files $zip $tempDir.FullName
+Start-Sleep -Seconds 1
 $install = (Resolve-Path (Join-Path $tempDir.FullName "*\install.cmd")).Path
 & $install
