@@ -19,7 +19,7 @@ function Unzip-Files($zipPath, $destinationPath) {
 $tempDir = Create-TempDirectory
 $client = New-Object Net.WebClient
 $zip = Join-Path $tempDir.FullName winbootstrap.zip
-$client.DownloadFile("https://github.com/aroben/winbootstrap/zipball/master", $zipFile)
+$client.DownloadFile("https://github.com/aroben/winbootstrap/zipball/master", $zip)
 Unzip-Files $zip $tempDir.FullName
 $install = Join-Path $tempDir.FullName install.cmd
 & $install
