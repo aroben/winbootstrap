@@ -24,6 +24,7 @@ function Install-Cygwin {
     'libkrb5_26',
     'libkafs0',
     'libgssapi3',
+    'libopenssl100',
     'openssh'
   )
 
