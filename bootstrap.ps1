@@ -20,6 +20,7 @@ function Install-Cygwin {
     'diffutils',
     'libgmp3',
     'libgmp10',
+    'libwrap0',
     'openssh'
   )
 
