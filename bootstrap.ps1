@@ -4,7 +4,6 @@ $ErrorActionPreference = "Stop"
 function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
-  $architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
   
   $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
 
