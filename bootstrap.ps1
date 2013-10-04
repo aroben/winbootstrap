@@ -26,6 +26,7 @@ function Install-Cygwin {
     'libgssapi3',
     'libopenssl100',
     'crypt',
+    'libssp0',
     'openssh'
   )
 
