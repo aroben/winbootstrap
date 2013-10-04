@@ -22,6 +22,7 @@ function Install-Cygwin {
     'libgmp10',
     'libwrap0',
     'libkrb5_26',
+    'libkafs0',
     'openssh'
   )
 
