@@ -23,6 +23,7 @@ function Install-Cygwin {
     'libwrap0',
     'libkrb5_26',
     'libkafs0',
+    'libgssapi3',
     'openssh'
   )
 
