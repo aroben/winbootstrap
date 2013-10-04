@@ -7,7 +7,7 @@ function Install-Cygwin {
   
   $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
 
-  $packages = "libintl8,libgcc1,libncursesw10,libiconv2,libattr1,openssh"
+  $packages = "libintl8,libgcc1,libncursesw10,libiconv2,libattr1,csih,libpcre0,libmpfr4,openssh"
 
   $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, $packages
   Wait-Process -InputObject $process
