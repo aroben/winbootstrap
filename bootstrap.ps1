@@ -4,9 +4,41 @@ $ErrorActionPreference = "Stop"
 function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
-  $client.DownloadFile("http://cygwin.com/setup.exe", $cygwinInstaller)
+  
+  $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
+  
+  $packages = @(
+    'libintl8',
+    'libgcc1',
+    'libncursesw10',
+    'libiconv2',
+    'libattr1',
+    'csih',
+    'libpcre0',
+    'libmpfr4',
+    'cygrunsrv',
+    'diffutils',
+    'libgmp3',
+    'libgmp10',
+    'libwrap0',
+    'libkrb5_26',
+    'libkafs0',
+    'libgssapi3',
+    'libopenssl100',
+    'crypt',
+    'libssp0',
+    'libheimntlm0',
+    'libcom_err2',
+    'libheimbase1',
+    'libasn1_8',
+    'libwind0',
+    'libhx509_5',
+    'libsqlite3_0',
+    'libroken18',
+    'openssh'
+  )
 
-  $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, openssh
+  $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, ($packages -join ",")
   Wait-Process -InputObject $process
   if ($process.ExitCode -ne 0) {
     throw "Error installing Cygwin"
