@@ -6,10 +6,24 @@ function Install-Cygwin {
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
   
   $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
+  
+  $packages = @(
+    'libintl8',
+    'libgcc1',
+    'libncursesw10',
+    'libiconv2',
+    'libattr1',
+    'csih',
+    'libpcre0',
+    'libmpfr4',
+    'cygrunsrv',
+    'diffutils',
+    'libgmp3',
+    'libgmp10',
+    'openssh'
+  )
 
-  $packages = "libintl8,libgcc1,libncursesw10,libiconv2,libattr1,csih,libpcre0,libmpfr4,cygrunsrv,diffutils,libgmp3,libgmp10,openssh"
-
-  $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, $packages
+  $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, ($packages -join ",")
   Wait-Process -InputObject $process
   if ($process.ExitCode -ne 0) {
     throw "Error installing Cygwin"
