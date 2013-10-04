@@ -27,6 +27,14 @@ function Install-Cygwin {
     'libopenssl100',
     'crypt',
     'libssp0',
+    'libheimntlm0',
+    'libcom_err2',
+    'libheimbase1',
+    'libasn1_8',
+    'libwind0',
+    'libhx509_5',
+    'libsqlite3_0',
+    'libroken18',
     'openssh'
   )
 
