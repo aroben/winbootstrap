@@ -5,9 +5,8 @@ function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
   $architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
-  IF ($architecture -eq "64-bit"){ $cygwinLink = "http://cygwin.com/setup-x86_64.exe" } ELSE { $cygwinLink = "http://cygwin.com/setup-x86.exe" }
   
-  $client.DownloadFile($cygwinLink, $cygwinInstaller)
+  $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
 
   $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, openssh
   Wait-Process -InputObject $process
