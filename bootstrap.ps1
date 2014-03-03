@@ -50,6 +50,10 @@ function Create-RootDirectory {
   New-Item C:\cygwin\root -Type Directory | Out-Null
 }
 
+function Rebase {
+  c:\cygwin\bin\dash.exe -c '/usr/bin/rebaseall'
+}
+
 function Register-Sshd {
   Add-Type -Assembly System.Web
   $password = [Web.Security.Membership]::GeneratePassword(16, 4)
@@ -59,6 +63,7 @@ function Register-Sshd {
 }
 
 Install-Cygwin
+Rebase
 Create-RootDirectory
 Register-Sshd
 Restart-Computer
